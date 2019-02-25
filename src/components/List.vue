@@ -36,8 +36,8 @@
          <span v-else> {{user.date | moment("DD/MM/YYYY")}} </span>
         </td>
         <td>
-        <span v-if="!user.editmode "><button v-show="!isHide" v-on:click="() => {edit(user);isHide=!isHide}">Edit</button></span>
-        <span  v-else ><button v-on:click="()=>{save(user);isHide = false}">Save</button></span>
+        <span v-if="!user.editmode " ><button v-show="!isHide" v-on:click="()=>{edit(user); isHide=!isHide}">Edit</button></span>
+        <span  v-else ><button v-on:click="()=>{save(user); isHide = false;}">Save</button></span>
         </td>
       </tr>
       
@@ -54,20 +54,20 @@
                 <th>Family ties</th>
             </thead>
             <tr  v-bind:key="user" v-for='user in formsRelatives' >
-                <td >
+                <td v-if='!user.editmode'>
                     <span  >{{user.fname}}</span>
                 </td>
-                <td >
+                <td v-if='!user.editmode'>
                     <span >{{user.lname}}</span>
                 </td>
-                <td >
+                <td v-if='!user.editmode'>
                     <span >{{user.select}}</span>
                     </td> 
-                <td>
+                <td v-if='!user.editmode'>
                   <span> {{user.date | moment("DD/MM/YYYY")}} </span>
                 </td>
-                <td>
-                  <span>{{user.relatives}}</span>
+                <td v-if='!user.editmode'>
+                  <span>{{user.relatives}}</span>  
                 </td>
             </tr>
         </table>
@@ -104,55 +104,58 @@ export default {
         for (let i=0; i<this.forms.length; i++){
           if(userName == this.forms[i].lname){
             this.formsRelatives.push(this.forms[i]);
-            const dateRelatives= new Date(this.forms[i].date).getFullYear();
-             const differ = +(this.date) - +(dateRelatives);
-             
+            
+            let dateRelatives= new Date(this.forms[i].date).getFullYear();
+            let differ = +(this.date) - +(dateRelatives);
             if (differ >= -15 && differ <= 15 ) {
              
               if(this.forms[i].select == 'Male') {
-                  
-                this.formsRelatives2 = Object.assign(this.formsRelatives[i], {relatives: 'Husband/Brother'});
+
+                 this.formsRelatives2 = Object.assign(this.forms[i], {relatives: 'Husband/Brother'});
               
-              } else {
-                this.formsRelatives2 = Object.assign(this.formsRelatives[i], {relatives: 'Wife/Sister'});
+              } else if (this.forms[i].select == 'Female') {
+                 this.formsRelatives2 = Object.assign(this.forms[i], {relatives: 'Wife/Sister'});
              }
             } else if (differ >= 16 && differ <= 40) {
               if(this.forms[i].select == 'Male') {
                   
-                this.formsRelatives2 = Object.assign(this.formsRelatives[i], {relatives: 'Father'});
+                 this.formsRelatives2 = Object.assign(this.forms[i], {relatives: 'Father'});
                
               } else {
-                this.formsRelatives2 = Object.assign(this.formsRelatives[i], {relatives: 'Mother'});
+                 this.formsRelatives2 = Object.assign(this.forms[i], {relatives: 'Mother'});
              }
             } else if (differ >= 41) {
               if(this.forms[i].select == 'Male') {
                   
-                this.formsRelatives2 = Object.assign(this.formsRelatives[i], {relatives: 'Grandfather'});
+                 this.formsRelatives2 = Object.assign(this.forms[i], {relatives: 'Grandfather'});
                
               } else {
-                this.formsRelatives2 = Object.assign(this.formsRelatives[i], {relatives: 'Grandmother'});
+                 this.formsRelatives2 = Object.assign(this.forms[i], {relatives: 'Grandmother'});
              }
             } else if (differ <= -16 && differ >= -40) {
               if(this.forms[i].select == 'Male') {
                   
-                this.formsRelatives2 = Object.assign(this.formsRelatives[i], {relatives: 'Son'});
+                this.formsRelatives2= Object.assign(this.forms[i], {relatives: 'Son'});
                
               } else {
-                this.formsRelatives2 = Object.assign(this.formsRelatives[i], {relatives: 'Daughter'});
+                 this.formsRelatives2 = Object.assign(this.forms[i], {relatives: 'Daughter'});
              }
             } else if (differ <= -41) {
               if(this.forms[i].select == 'Male') {
                   
-                this.formsRelatives2 = Object.assign(this.formsRelatives[i], {relatives: 'Grandson'});
+                 this.formsRelatives2 = Object.assign(this.forms[i], {relatives: 'Grandson'});
                
-              } else {
-                this.formsRelatives2 = Object.assign(this.formsRelatives[i], {relatives: 'Granddaughter'});
-             }
-            }
-          }
-          
-        }
+              } else if(this.forms[i].select == 'Female')  {
+                this.formsRelatives2 = Object.assign(this.forms[i], {relatives: 'Granddaughter'});
+             } 
 
+            } 
+
+         } 
+        
+        } 
+        
+  
 
       },
   save : function(obj){
@@ -189,7 +192,7 @@ export default {
  },
  computed:{
   sortedPeople:function() {
-    return this.forms.sort((a,b) => {
+    return this.forms.slice().sort((a,b) => {
       let modifier = 1;
       if(this.currentSortDir === 'desc') modifier = -1;
       if(a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
@@ -198,8 +201,6 @@ export default {
     });
   }
 }
- 
- 
 }
 </script>
 

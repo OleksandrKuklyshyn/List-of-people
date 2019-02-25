@@ -1,8 +1,6 @@
-
-
 <template>
     <div class="container">
-        <form action="" v-on:submit="validateBeforeSubmit" > 
+        <form action="" v-on:submit.prevent="validateBeforeSubmit" > 
             <div class="row">
                 <h1>Form</h1>
             </div>
@@ -11,7 +9,7 @@
                     <label for="" >First Name</label>
                 </div>
                 <div class="col-75">
-                    <input  type="text" name="name"   placeholder="Your Name ..." v-model="form.fname"  v-validate.initial.$touched="'required|min:3|max:50|alpha'" >
+                    <input  type="text" name="name"   placeholder="Your Name ..." v-model.trim="form.fname"  v-validate.initial.$touched="'required|min:3|max:50|alpha'" >
                     <div>
                     <span v-show="errors.has('name')" class="text-danger">{{ errors.first('name') }}</span>
                 </div>
@@ -24,7 +22,7 @@
                     <label for="">Last Name</label>
                 </div>
                 <div class="col-75">
-                    <input  type="text" name="lastname"   placeholder="Your Last Name ..." v-model="form.lname" v-validate.initial.$touched="'required|min:3|max:50|alpha'">
+                    <input  type="text" name="lastname"   placeholder="Your Last Name ..." v-model.trim="form.lname" v-validate.initial.$touched="'required|min:3|max:50|alpha'">
                 </div>
                 <div>
                     <span v-show="errors.has('lastname')" class="text-danger">{{ errors.first('lastname') }}</span>
@@ -35,7 +33,7 @@
                     <label for="">Gender</label>
                 </div>
                 <div class="col-75">
-                    <select name="gender"   v-model='form.select' v-validate.initial.$touched="'required'" >
+                    <select name="gender"   v-model.trim='form.select' v-validate.initial.$touched="'required'" >
                         <option>Male</option>
                         <option>Female</option>
                     </select>
@@ -50,7 +48,7 @@
                     <label for="">Date of Birth</label>
                 </div>
                 <div class="col-75">
-                    <input  type="date" v-model='form.date' name="date"  v-validate.initial.$touched="'required'">
+                    <input  type="date" v-model.trim='form.date' name="date"  v-validate.initial.$touched="'required'">
                     <div>
                     <span v-show="errors.has('date')" class="text-danger">{{ errors.first('date') }}</span>
                 </div>
