@@ -40,12 +40,14 @@
         <span  v-else ><button v-on:click="()=>{save(user); isHide = false;}">Save</button></span>
         </td>
       </tr>
-      
-      
     </table>
 
-  
-    <table id='list_people' v-if="!formsRelatives.length==0">
+    <div class="alert" v-if="showMessage">
+      <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+      <h2 class="message">Relatives of the relationship are absent</h2>
+    </div>
+
+    <table id='list_people' v-if="formsRelatives.length>1">
             <thead>
                 <th>Name</th>
                 <th>Surname</th>
@@ -89,8 +91,8 @@ export default {
      date: '',
      dateRelatives: '',
      currentSort:'name',
-    currentSortDir:'asc'
-     
+     currentSortDir:'asc',
+     showMessage: false
    }
  },
  props: {
@@ -152,6 +154,9 @@ export default {
             } 
 
          } 
+         if (this.formsRelatives.length<1 && obj.editmode) {
+            this.showMessage = true;
+         }
         
         } 
         
@@ -161,6 +166,7 @@ export default {
   save : function(obj){
         this.$set(obj, 'editmode', false);
         this.formsRelatives = [];
+        this.showMessage = false;
       },
   sort:function(s) {
     if(s === this.currentSort) {
@@ -244,7 +250,7 @@ th {
   text-align: inherit 
 }
 table input,select {
-  border-radius: 4px;
+ 
   border: none;
   background-color: #4CAF50;
   color: #000;
@@ -268,5 +274,26 @@ i {
 .down {
   transform: rotate(45deg);
   -webkit-transform: rotate(45deg);
+}
+.alert {
+  padding: 1px;
+  background-color: #f44336;
+  color: white;
+  
+}
+
+.closebtn {
+  margin-right: 5px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 32px;
+  line-height: 32px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: black;
 }
 </style>
