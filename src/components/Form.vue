@@ -123,6 +123,8 @@ input[type=text], select, textarea, input[type=date] {
 label {
   padding: 12px 12px 12px 0;
   display: inline-block;
+  font-size: 18px;
+  font-weight: 400;
 }
 button {
   background-color: #4CAF50;
@@ -132,6 +134,7 @@ button {
   border-radius: 4px;
   cursor: pointer;
   float: right;
+  font-size: 18px;
 }
 button:hover {
   background-color: #45a049;
@@ -143,7 +146,7 @@ button:hover {
   max-width: 800px;
   margin: 0 auto;
   padding-top: 5px;
-  margin-top: 50px;
+  margin-bottom: 50px;
 }
 .col-25 {
   float: left;

@@ -298,4 +298,17 @@ i {
 .closebtn:hover {
   color: black;
 }
+button {
+  background-color: #4CAF50;
+  color: #000;
+  padding: 3px 12px;
+  margin: 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+button:hover {
+  background-color: #45a049;
+}
 </style>
