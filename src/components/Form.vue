@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <form action="" v-on:submit.prevent="validateBeforeSubmit" > 
+        <form action="" v-on:submit.prevent.once="validateBeforeSubmit" > 
             <div class="row">
                 <h1>Form</h1>
             </div>
@@ -92,7 +92,7 @@ export default {
         
          if(!this.errors.any()){
           this.getFormValues();
-          
+        
           return;
          } 
         } 

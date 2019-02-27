@@ -154,17 +154,19 @@ export default {
             } 
 
          } 
-         if (this.formsRelatives.length<1 && obj.editmode) {
-            this.showMessage = true;
-         }
+         
         
         } 
         
-  
+  if (this.formsRelatives.length<2 && obj.editmode) {
+            this.showMessage = true;
+         }
 
       },
   save : function(obj){
+        
         this.$set(obj, 'editmode', false);
+        this.$http.put('https://vue-first-project-2dd6f.firebaseio.com/posts.json', this.forms);
         this.formsRelatives = [];
         this.showMessage = false;
       },
